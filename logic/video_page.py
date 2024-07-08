@@ -12,6 +12,9 @@ class VideoPage(BasePageApp):
     ADD_COMMENT_INPUT = '//div[@id="contenteditable-root"]'
     COMMENT_BUTTON = '//button[@aria-label="Comment"]'
 
+    SUBSCRIBE_BUTTON = '//button[contains(@aria-label, "Subscribe to")]'
+    UNSUBSCRIBE_BUTTON = '//span[text() = "Subscribed"]'
+
     def __init__(self, driver):
         super().__init__(driver)
         try:
@@ -45,3 +48,22 @@ class VideoPage(BasePageApp):
         comment_present = WebDriverWait(self._driver, 5).until(
             EC.presence_of_element_located((By.XPATH, comment_xpath)))
         return comment_present.is_displayed()
+
+    def click_on_subscribe_button(self):
+        try:
+            element = WebDriverWait(self._driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, self.SUBSCRIBE_BUTTON)))
+            element.click()
+        except c.NoSuchElementException as e:
+            print("Already subscribed !", e)
+
+    def is_subscribed(self):
+        try:
+            elements = WebDriverWait(self._driver, 5).until(
+                EC.presence_of_all_elements_located((By.XPATH, self.UNSUBSCRIBE_BUTTON)))
+            if len(elements) == 2:
+                return True
+            else:
+                return False
+        except c.NoSuchElementException as e:
+            print("Already subscribed !", e)
