@@ -1,24 +1,22 @@
 import time
 import unittest
-import undetected_chromedriver as uc
+
+from infra.browser_wrapper import BrowserWrapper
 from infra.config_provider import ConfigProvider
 from logic.home_page_after_login import HomePageAfterLogin
 from logic.home_page_before_login import HomePageBeforeLogin
 from logic.login_page import LoginPage
 from logic.video_page import VideoPage
+from infra.utils import Utils
 
 
 class TestAddComment(unittest.TestCase):
 
     # Before all - Called automatically
     def setUp(self):
-        # Initialize the undetected ChromeDriver
-        options = uc.ChromeOptions()
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        self.driver = uc.Chrome(options=options)
+        self.browser = BrowserWrapper()
         self.config = ConfigProvider.load_config_json()
-        self.driver.get(self.config["url"])
-        self.driver.execute_script("")
+        self.driver = self.browser.get_driver(self.config["url"])
         self.home_page = HomePageBeforeLogin(self.driver)
 
     # def tearDown(self) -> None:
@@ -48,11 +46,14 @@ class TestAddComment(unittest.TestCase):
         video_page = VideoPage(self.driver)
 
         # Act
-        video_page.fill_comment_input("Hi guys")
+        unique_comment = Utils.generate_unique_comment("Hi guys")
+        video_page.fill_comment_input(unique_comment)
         time.sleep(5)
         video_page.click_on_comment_button()
 
         # Assert
+        comment_present = video_page.is_comment_displayed(unique_comment)
+        self.assertTrue(comment_present, f"Comment '{unique_comment}' was not found on the video page.")
 
 
 if __name__ == "__main__":

@@ -39,3 +39,9 @@ class VideoPage(BasePageApp):
             EC.presence_of_element_located((By.XPATH, self.COMMENT_BUTTON)))
 
         element.click()
+
+    def is_comment_displayed(self, unique_comment):
+        comment_xpath = f'//span[contains(text(), "{unique_comment}")]'
+        comment_present = WebDriverWait(self._driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, comment_xpath)))
+        return comment_present.is_displayed()

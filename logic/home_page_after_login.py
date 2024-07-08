@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class HomePageAfterLogin(BasePage):
-    index = Utils.generate_random_string()
     VIDEO_LINK = '(//a[@id="video-title-link"])[1]'
 
     def __init__(self, driver):

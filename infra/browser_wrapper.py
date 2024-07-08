@@ -1,6 +1,7 @@
 from selenium import webdriver
 from infra.config_provider import ConfigProvider
 from selenium import common as c
+import undetected_chromedriver as uc
 
 
 class BrowserWrapper:
@@ -11,8 +12,10 @@ class BrowserWrapper:
 
     def get_driver(self, url):
         try:
+            options = uc.ChromeOptions()
+            options.add_argument("--disable-blink-features=AutomationControlled")
             if self.config["browser"] == "Chrome":
-                self._driver = webdriver.Chrome()
+                self._driver = uc.Chrome(options=options)
             elif self.config["browser"] == "Firefox":
                 self._driver = webdriver.Firefox()
             else:
