@@ -12,7 +12,6 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self._email_input = self._driver.find_element(By.XPATH, self.EMAIL_INPUT)
-        #  self._next_button = self._driver.find_element(By.XPATH, self.NEXT_BUTTON)
 
     def fill_username_input(self, username):
         WebDriverWait(self._driver, 5).until(
