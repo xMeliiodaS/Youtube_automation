@@ -2,6 +2,7 @@ import time
 import unittest
 import undetected_chromedriver as uc
 from infra.config_provider import ConfigProvider
+from logic.home_page_after_login import HomePageAfterLogin
 from logic.home_page_before_login import HomePageBeforeLogin
 from logic.login_page import LoginPage
 
@@ -18,6 +19,9 @@ class TestAddComment(unittest.TestCase):
         self.driver.get(self.config["url"])
         self.home_page = HomePageBeforeLogin(self.driver)
 
+    def tearDown(self) -> None:
+        self.driver.quit()
+
     def login(self):
         # Wait for the page to load
         self.home_page.click_on_login_button()
@@ -33,7 +37,8 @@ class TestAddComment(unittest.TestCase):
     def test_add_comment_successfully(self):
         # Arrange
         self.login()
-
+        home_page_after_login = HomePageAfterLogin(self.driver)
+        home_page_after_login.click_on_video_link()
 
         # Act
 
