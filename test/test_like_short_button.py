@@ -48,7 +48,7 @@ class TestLikeShortButton(unittest.TestCase):
         short_page.click_on_like_button()
         time.sleep(5)
         is_like = short_page.already_liked()
-
+        a = 5
         # Assert
         self.assertTrue(is_like)
 
