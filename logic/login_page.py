@@ -1,7 +1,10 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from infra.base_page import BasePage
+from logic.home_page import HomePage
 
 
 class LoginPage(BasePage):
@@ -27,3 +30,16 @@ class LoginPage(BasePage):
         element = WebDriverWait(self._driver, 10).until(
             EC.presence_of_element_located((By.XPATH, self.NEXT_BUTTON)))
         element.click()
+
+    def login_flow(self, config):
+        # Wait for the page to load
+        home_page = HomePage(self._driver)
+        home_page.click_on_login_button()
+
+        self.fill_username_input(config["email"])
+        self.click_on_next_button()
+
+        self.fill_password_input(config["password"])
+        time.sleep(1)
+        self.click_on_next_button()
+        time.sleep(7)

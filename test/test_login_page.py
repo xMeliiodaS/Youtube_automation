@@ -27,7 +27,6 @@ class TestLoginPage(unittest.TestCase):
         login_page.click_on_next_button()
 
         login_page.fill_password_input(self.config["password"])
-        time.sleep(1)
         login_page.click_on_next_button()
 
 

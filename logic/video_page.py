@@ -19,7 +19,7 @@ class VideoPage(BasePageApp):
         super().__init__(driver)
         try:
             time.sleep(4)
-            self._driver.execute_script("window.scrollBy(0, 500);")
+
         except c.NoSuchElementException as e:
             print("NoSuchElementException", e)
 
@@ -67,3 +67,7 @@ class VideoPage(BasePageApp):
                 return False
         except c.NoSuchElementException as e:
             print("Already subscribed !", e)
+
+    def scroll(self):
+        time.sleep(4)
+        self.scroll()

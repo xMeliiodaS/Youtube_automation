@@ -6,3 +6,6 @@ class BasePage:
 
     def refresh_page(self):
         self._driver.reload()
+
+    def scroll(self):
+        self._driver.execute_script("window.scrollBy(0, 500);")

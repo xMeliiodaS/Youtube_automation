@@ -19,25 +19,28 @@ class TestAddComment(unittest.TestCase):
         self.driver = self.browser.get_driver(self.config["url"])
         self.home_page = HomePageBeforeLogin(self.driver)
 
-    # def tearDown(self) -> None:
-    #     self.driver.quit()
-
-    def login(self):
-        # Wait for the page to load
-        self.home_page.click_on_login_button()
-
         login_page = LoginPage(self.driver)
-        login_page.fill_username_input(self.config["email"])
-        login_page.click_on_next_button()
+        login_page.login_flow(self.config)
 
-        login_page.fill_password_input(self.config["password"])
-        time.sleep(1)
-        login_page.click_on_next_button()
-        time.sleep(7)
+    def tearDown(self) -> None:
+        self.driver.quit()
+
+    # def login(self):
+    #     # Wait for the page to load
+    #     self.home_page.click_on_login_button()
+    #
+    #     login_page = LoginPage(self.driver)
+    #     login_page.fill_username_input(self.config["email"])
+    #     login_page.click_on_next_button()
+    #
+    #     login_page.fill_password_input(self.config["password"])
+    #     time.sleep(1)
+    #     login_page.click_on_next_button()
+    #     time.sleep(7)
 
     def test_add_comment_successfully(self):
         # Arrange
-        self.login()
+        #   self.login()
         home_page_after_login = HomePageAfterLogin(self.driver)
 
         time.sleep(2)
